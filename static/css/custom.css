@@ -2,7 +2,14 @@ div div div a {
     color: coral
 }
 
-.col-md-3 {
+#not-unique-id {
+    display: inline-block;
     background-color:aquamarine;
     border: 5px solid white;
+    width: 150px;
+    height: 150px;
+    border-radius: 10%;
+    text-align: center;
+
+
 }
