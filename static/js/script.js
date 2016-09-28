@@ -77,6 +77,7 @@ $(document).ready(function(){
     $("#add-board-title").submit(function(event) {
         event.preventDefault(); //Prevents the default behavior, wouldn't refresh everything
         var title = $("#board-input").val();
+        $('#board-input').val('');
         if( title == '' ){
             alert("Please enter a title!");
         } else {
