@@ -35,8 +35,10 @@ $(document).ready(function(){
         
         var title = $("#board-input").val();
         addNewBoardWithTitle(title);
-        $("<div id='not-unique-id'><p>"+title+"</p></div>").insertBefore("#board-input");
+        $("<div id='not-unique-id'><p>"+title+"</p></div>").insertBefore("#add-board-title");
     })
+
+   
 });
 
 // THE DIV ID HAS TO BE CHANGED TO UNIQUE FOR EVERY NEW DIV !!!!!!!!!!!!!!
