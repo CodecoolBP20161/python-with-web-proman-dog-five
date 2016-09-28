@@ -34,8 +34,12 @@ $(document).ready(function(){
         event.preventDefault(); //Prevents the default behavior, wouldn't refresh everything
         
         var title = $("#board-input").val();
-        addNewBoardWithTitle(title);
-        $("<div id='not-unique-id'><p>"+title+"</p></div>").insertBefore("#add-board-title");
+        if( title == '' ){
+            alert("Please enter a title!");
+        } else {
+            addNewBoardWithTitle(title);
+            $("<div id='not-unique-id'><p>" + title + "</p></div>").insertBefore("#add-board-title");
+        }
     })
 
    
