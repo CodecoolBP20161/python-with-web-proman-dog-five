@@ -47,7 +47,7 @@ function listBoards() {
         var item = fromList[i];
         var title = item.title;
 
-        var new_board = $("<div id='board_" + title + "' class='board'><p>" + title + "</p></div>");
+        var new_board = $("<div id='board_" + title + "'class='board'><p>" + title + "</p></div>");
         new_board.insertBefore("#add-board-title");
         clickToHide();
     }
@@ -59,8 +59,22 @@ function clickToHide() {
         event.preventDefault();
         $('.board').hide(1000);
         // removeAllBoards();
-        return ( ($(this).attr('id')));
+        changeFormId('#add-board-title', 'new-list-title', 'Add new list title');
+        return ($(this).attr('id'));
+
     });
+}
+
+//Change id of forms
+function changeFormId(oldId, newId, newPlaceHolder){
+    $(oldId).attr('id', newId);
+    $('#form-input').attr('placeholder', newPlaceHolder);
+
+}
+
+//Change title of current page
+function currentPageTitle(pageTitle) {
+    $('#page-title-text').text(pageTitle);
 }
 
 // Create new board object
@@ -72,12 +86,13 @@ function addNewBoardWithTitle(title) {
 
 
 $(document).ready(function(){
+    currentPageTitle("Your Boards");
     getDataFromLocalStorage();
     listBoards();
     $("#add-board-title").submit(function(event) {
         event.preventDefault(); //Prevents the default behavior, wouldn't refresh everything
-        var title = $("#board-input").val();
-        $('#board-input').val('');
+        var title = $("#form-input").val();
+        $('#form-input').val('');
         if( title == '' ){
             alert("Please enter a title!");
         } else {
