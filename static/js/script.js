@@ -53,12 +53,13 @@ function listBoards() {
     }
 }
 
-//clickToHideAllBoards
+//clickToHideAllBoards and return the clicked board's ID
 function clickToHide() {
     $('.board').click(function (event) {
         event.preventDefault();
         $('.board').hide(1000);
         // removeAllBoards();
+        return ( ($(this).attr('id')));
     });
 }
 
@@ -73,9 +74,6 @@ function addNewBoardWithTitle(title) {
 $(document).ready(function(){
     getDataFromLocalStorage();
     listBoards();
-    alert(boards.length);
-
-
     $("#add-board-title").submit(function(event) {
         event.preventDefault(); //Prevents the default behavior, wouldn't refresh everything
         var title = $("#board-input").val();
@@ -83,4 +81,3 @@ $(document).ready(function(){
         clickToHide();
     })
 });
-// THE DIV ID HAS TO BE CHANGED TO UNIQUE FOR EVERY NEW DIV !!!!!!!!!!!!!!
