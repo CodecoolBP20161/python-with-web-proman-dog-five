@@ -77,16 +77,11 @@ $(document).ready(function(){
     $("#add-board-title").submit(function(event) {
         event.preventDefault(); //Prevents the default behavior, wouldn't refresh everything
         var title = $("#board-input").val();
-
-        addNewBoardWithTitle(title);
-        clickToHide();
-
         if( title == '' ){
             alert("Please enter a title!");
         } else {
             addNewBoardWithTitle(title);
-            $("<div id='not-unique-id'><p>" + title + "</p></div>").insertBefore("#add-board-title");
+            clickToHide();
         }
-
     })
 });
