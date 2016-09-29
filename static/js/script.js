@@ -1,71 +1,122 @@
+////////////////////////////////////
+// VARIABLES
+////////////////////////////////////
+
 var boards = [];
+var local_key = 'boards';
+
+
+/////////////////////////////////////
+// PROXY
+////////////////////////////////////
+
+// Convert Boards list to JSON
+function convertToJson(){
+    var jstring = JSON.stringify(boards);
+    return jstring;
+}
+
+
+/////////////////////////////////////
+// BOARD CLASS
+/////////////////////////////////////
 
 function Board(title) {
     this.title = title;
-}
-//Save to local storage
-function saveBoardsToLocalStorage() {
-    var str = JSON.stringify(boards);
-    localStorage.setItem("boards", str);
-    showLastBoard();
+    this.lists = [];
+    this.id = 'board_'+ this.title;
 }
 
-//Remove board from LocalStorage
-function removeDataWithId(boardId) {
-    boards.slice(boardId, 1);
+
+// // Save board to list
+// Board.prototype.saveToList = function () {
+//     boards.push(this);
+// }
+
+
+// Create new board object
+function addNewBoardWithTitle(title, div_id) {
+    var board = new Board(title, div_id);
+    boards.push(board);
     saveBoardsToLocalStorage();
 }
 
-//remove all Boards
-function removeAllBoards() {
-    localStorage.removeItem("boards");
+
+///////////////////////////////////////
+// LOCAL STORAGE
+////////////////////////////////////////
+
+
+
+// Save to local storage
+function saveBoardsToLocalStorage() {
+    jstring = convertToJson();
+    localStorage.setItem(local_key, jstring);
+    showLastBoard();
 }
 
-
-//Get data from local storage
+// Get data from local storage
 function getDataFromLocalStorage() {
-    var storage_date = localStorage.getItem("boards");
-    boards = JSON.parse(storage_date);
+    var storage_data = localStorage.getItem(local_key);
+    boards = JSON.parse(storage_data);
     if(!boards){
         boards = [];
     }
     return boards;
 }
 
-//After add new Board show the last board
+
+
+////////////////////////////////////////////
+// DISPLAY BOARDS
+////////////////////////////////////////////
+
+// Display the new board immediately after it's creation
 function showLastBoard() {
-    var fromList = getDataFromLocalStorage();
-    var item = fromList[fromList.length-1];
-    var title = item.title;
-    $("<div id='board_"+ title + "' class='board'><p>"+title+"</p></div>").insertBefore("#add-board-title");
-
+    var boards = getDataFromLocalStorage();
+    var board = boards[boards.length-1];
+    var title = board.title;
+    var id = board.id;
+    var htmlBoard = $("<div id="+ "'" + id + "' class='board'><p>" + title + "</p></div>");
+    htmlBoard.insertBefore("#add-board-title");
 }
-//Show all boards
-function listBoards() {
-    var fromList = getDataFromLocalStorage();
-    for (var i in fromList) {
-        var item = fromList[i];
-        var title = item.title;
 
-        var new_board = $("<div id='board_" + title + "'class='board'><p>" + title + "</p></div>");
-        new_board.insertBefore("#add-board-title");
-        clickToHide();
+// Display all boards on the home screen
+function displayBoards() {
+    var boards = getDataFromLocalStorage();
+    for (var i in boards) {
+        var board = boards[i];
+        var title = board.title;
+        var id = board.id;
+        var htmlBoard = $("<div id="+ "'" + id + "' class='board'><p>" + title + "</p></div>");
+        htmlBoard.insertBefore("#add-board-title");
     }
 }
 
-//clickToHideAllBoards and return the clicked board's ID
+// Get board from boards lis by ID
+function getBoardById(idString){
+    for (var i in boards){
+        if (idString === boards[i]['id']) {
+            return boards[i]['title'];
+        }
+    }
+}
+
+
+//Hide all Boards when one of them is called and return the it's ID
 function clickToHide() {
     $('.board').click(function (event) {
         event.preventDefault();
         $('.board').hide(1000);
-        // removeAllBoards();
+        var board_id =  ($(this).attr('id'));
+        var title = getBoardById(board_id);
         changeFormId('#add-board-title', 'new-list-title', 'Add new list title');
-        return ($(this).attr('id'));
-
+        currentPageTitle(title);
     });
 }
 
-//Change id of forms
+
+//Change id and placeholder of forms
 function changeFormId(oldId, newId, newPlaceHolder){
     $(oldId).attr('id', newId);
     $('#form-input').attr('placeholder', newPlaceHolder);
@@ -77,18 +128,16 @@ function currentPageTitle(pageTitle) {
     $('#page-title-text').text(pageTitle);
 }
 
-// Create new board object
-function addNewBoardWithTitle(title) {
-    var board = new Board(title);
-    boards.push(board);
-    saveBoardsToLocalStorage();
-}
 
+////////////////////////////////////////////
+// INTERFACE LOGIC
+////////////////////////////////////////////
 
 $(document).ready(function(){
     currentPageTitle("Your Boards");
     getDataFromLocalStorage();
-    listBoards();
+    displayBoards();
+    clickToHide();
     $("#add-board-title").submit(function(event) {
         event.preventDefault(); //Prevents the default behavior, wouldn't refresh everything
         var title = $("#form-input").val();
@@ -101,3 +150,36 @@ $(document).ready(function(){
         }
     })
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////
+// LIST OF CARDS CLASS
+/////////////////////////////////////
+
+// function ListOfCards(title, boardId) {
+//     this.title = title;
+//     this.cards = [];
+// }
+
+// ListOfCards.prototype.pushToBoard = function() {
+//
+// }
+
+
+
