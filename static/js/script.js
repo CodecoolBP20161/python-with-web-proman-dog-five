@@ -77,7 +77,7 @@ function showLastBoard() {
     var board = boards[boards.length-1];
     var title = board.title;
     var id = board.id;
-    var htmlBoard = $("<div id="+ "'" + id + "' class='board'><p>" + title + "</p></div>");
+    var htmlBoard = $("<div id=" + "'" + id + "'" + " class='board'><p><a href=/ "+ "'" + id + "' >" + title + "</a></p></div>");
     htmlBoard.insertBefore("#add-board-title");
 }
 
@@ -88,7 +88,7 @@ function displayBoards() {
         var board = boards[i];
         var title = board.title;
         var id = board.id;
-        var htmlBoard = $("<div id="+ "'" + id + "' class='board'><p>" + title + "</p></div>");
+        var htmlBoard = $("<div id=" + "'" + id + "'" + " class='board'><p><a href=/"+ "'" + id + "'>" + title + "</a></p></div>");
         htmlBoard.insertBefore("#add-board-title");
     }
 }
@@ -129,26 +129,67 @@ function currentPageTitle(pageTitle) {
 }
 
 
+
+
+/////////////////////////////////////
+// LISTS CLASS
+/////////////////////////////////////
+
+function List(title, boardId) {
+    this.title = title;
+    this.cards = [];
+    this.boardId = 'list_' + this.title;
+}
+
+
+function addNewListWithTitle(title, boardId) {
+    var list = new List(title, boardId);
+    console.log(list);
+
+    for (var i in boards) {
+        if (boardId === boards[i]['id']){
+            var board = boards[i]['lists'];
+            return board;
+        }
+    }
+
+    board['lists'].push(list);
+    saveBoardsToLocalStorage();
+
+}
+
 ////////////////////////////////////////////
 // INTERFACE LOGIC
 ////////////////////////////////////////////
 
-$(document).ready(function(){
+$(document).ready(function() {
     currentPageTitle("Your Boards");
     getDataFromLocalStorage();
     displayBoards();
     clickToHide();
-    $("#add-board-title").submit(function(event) {
+    $("#add-board-title").submit(function (event) {
         event.preventDefault(); //Prevents the default behavior, wouldn't refresh everything
         var title = $("#form-input").val();
         $('#form-input').val('');
-        if( title == '' ){
+        if (title == '') {
             alert("Please enter a title!");
         } else {
             addNewBoardWithTitle(title);
             clickToHide();
         }
-    })
+    });
+
+    $("#add-list-title").submit(function(event) {
+        event.preventDefault()
+        var boardId = $("page-title-text").text();
+        console.log(boardId);
+
+        var list_title = $("#form-input").val();
+        console.log(list_title);
+        addNewListWithTitle(list_title, boardId);
+
+
+    });
 });
 
 
@@ -168,18 +209,6 @@ $(document).ready(function(){
 
 
 
-/////////////////////////////////////
-// LIST OF CARDS CLASS
-/////////////////////////////////////
-
-// function ListOfCards(title, boardId) {
-//     this.title = title;
-//     this.cards = [];
-// }
-
-// ListOfCards.prototype.pushToBoard = function() {
-//
-// }
 
 
 
