@@ -88,16 +88,27 @@ function displayBoards() {
         var board = boards[i];
         var title = board.title;
         var id = board.id;
+
         var htmlBoard = $("<div id=" + "'" + id + "'" + " class='board'><p><a href=/"+ "'" + id + "'>" + title + "</a></p></div>");
         htmlBoard.insertBefore("#add-board-title");
+
     }
 }
 
-// Get board from boards lis by ID
-function getBoardById(idString){
+// // Get board from boards list by ID
+// function getBoardById(idString){
+//     for (var i in boards){
+//         if (idString === boards[i]['id']) {
+//             return boards[i]['title'];
+//         }
+//     }
+// }
+
+// Get board object by ID from boards list
+function getBoardObjectById(idString){
     for (var i in boards){
         if (idString === boards[i]['id']) {
-            return boards[i]['title'];
+            return boards[i];
         }
     }
 }
@@ -109,9 +120,11 @@ function clickToHide() {
         event.preventDefault();
         $('.board').hide(1000);
         var board_id =  ($(this).attr('id'));
-        var title = getBoardById(board_id);
+        var board = getBoardObjectById(board_id);
+        var title=board['title'];
         changeFormId('#add-board-title', 'new-list-title', 'Add new list title');
         currentPageTitle(title);
+        return board_id;
     });
 }
 
@@ -129,34 +142,42 @@ function currentPageTitle(pageTitle) {
 }
 
 
-
-
 /////////////////////////////////////
 // LISTS CLASS
 /////////////////////////////////////
 
 function List(title, boardId) {
+    this.boardId = boardId;
     this.title = title;
     this.cards = [];
-    this.boardId = 'list_' + this.title;
+    this.listId = 'list_' + this.title;
 }
 
 
 function addNewListWithTitle(title, boardId) {
     var list = new List(title, boardId);
-    console.log(list);
-
-    for (var i in boards) {
-        if (boardId === boards[i]['id']){
-            var board = boards[i]['lists'];
-            return board;
-        }
-    }
-
+    getDataFromLocalStorage();
+    var board = getBoardObjectById(boardId);
     board['lists'].push(list);
+
     saveBoardsToLocalStorage();
 
+
+
+    // if (boards.length > 0){
+    //     var board = getBoardObjectById(boardId);
+    //     board['lists'].push(list);
+    //     saveBoardsToLocalStorage();
+    // } else {
+    //     getDataFromLocalStorage();
+    //     saveBoardsToLocalStorage();
+    //     var board = getBoardObjectById(boardId);
+    //     var board = getBoardObjectById(boardId);
+    //     board['lists'].push(list);
+    //     saveBoardsToLocalStorage();
+    // }
 }
+// addNewListWithTitle('ez a list cim', 'board_kati');
 
 ////////////////////////////////////////////
 // INTERFACE LOGIC
@@ -175,20 +196,18 @@ $(document).ready(function() {
             alert("Please enter a title!");
         } else {
             addNewBoardWithTitle(title);
-            clickToHide();
+            var board_id = clickToHide();
+
         }
     });
 
     $("#add-list-title").submit(function(event) {
-        event.preventDefault()
-        var boardId = $("page-title-text").text();
-        console.log(boardId);
-
+        event.preventDefault();
+        var boardId = board_id;
         var list_title = $("#form-input").val();
-        console.log(list_title);
+
+
         addNewListWithTitle(list_title, boardId);
-
-
     });
 });
 
