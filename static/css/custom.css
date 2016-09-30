@@ -9,6 +9,9 @@ div div a {
 .navbar-custom{
     background-color: crimson;
 }
+.navbar-brand a:hover{
+    text-decoration: none;
+}
 
 .board {
     display: inline-block;
@@ -42,6 +45,7 @@ div div a {
     text-align: center;
     padding: 20px;
     border: 10px solid white;
+
 }
 
 
