@@ -1,9 +1,25 @@
+/*******************************************
+GENERAL
+********************************************/
+
 html {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
 div div a {
-    color: white;
+   color: white;
+   padding-right: 55px;
+   font-size: 20px;
+}
+
+
+/******************************************
+HEADER - NAVIGATION BAR
+*******************************************/
+
+h1 {
+    padding-left: 10px;
 }
 
 .navbar-custom{
@@ -12,6 +28,11 @@ div div a {
 .navbar-brand a:hover{
     text-decoration: none;
 }
+
+
+/*******************************************
+BOXES OF BOARDS, LISTS
+********************************************/
 
 .board {
     display: inline-block;
@@ -35,6 +56,10 @@ div div a {
 }
 
 
+/******************************************
+INPUT FORM
+*******************************************/
+
 #add-board-title,
 #new-list-title {
     display: inline-block;
@@ -48,14 +73,17 @@ div div a {
 
 }
 
-
-
 input {
     background-color: #EEEBEB;
 }
 
+
+/*******************************************
+BUTTON IN INPUT FORM
+********************************************/
+
 #button {
-    background-color: #FFB300; /* Green */
+    background-color: #FFB300; /* Yellow */
     border: none;
     color: white;
     width: 60px;
@@ -70,6 +98,4 @@ input {
     background-color: #66FF00;
 }
 
-h1 {
-    padding-left: 10px;
-}
+

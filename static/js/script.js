@@ -28,12 +28,6 @@ function Board(title) {
 }
 
 
-// // Save board to list
-// Board.prototype.saveToList = function () {
-//     boards.push(this);
-// }
-
-
 // Create new board object
 function addNewBoardWithTitle(title, div_id) {
     var board = new Board(title, div_id);
@@ -78,7 +72,7 @@ function showLastBoard() {
     var title = board.title;
     var id = board.id;
     var htmlBoard = $("<div id="+ "'" + id + "' class='board'><p>" + title + "</p></div>");
-    htmlBoard.insertBefore("#add-board-title");
+    htmlBoard.insertAfter("#add-board-title");
 }
 
 // Display all boards on the home screen
@@ -89,7 +83,7 @@ function displayBoards() {
         var title = board.title;
         var id = board.id;
         var htmlBoard = $("<div id="+ "'" + id + "' class='board'><p>" + title + "</p></div>");
-        htmlBoard.insertBefore("#add-board-title");
+        htmlBoard.insertAfter("#add-board-title");
     }
 }
 
@@ -150,36 +144,4 @@ $(document).ready(function(){
         }
     })
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/////////////////////////////////////
-// LIST OF CARDS CLASS
-/////////////////////////////////////
-
-// function ListOfCards(title, boardId) {
-//     this.title = title;
-//     this.cards = [];
-// }
-
-// ListOfCards.prototype.pushToBoard = function() {
-//
-// }
-
-
 
